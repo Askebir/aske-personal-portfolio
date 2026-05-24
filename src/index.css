@@ -20,6 +20,7 @@
   --radius: 0.75rem;
 
   --color-highlight: #f5a623;
+  --color-surface:#1a2329;
 }
 
 @layer base {
@@ -35,4 +36,15 @@
   .font-serif{
     font-family: :"Playfair Display", serif;
   }
+}
+
+
+
+
+@layer components {
+  .glass{
+    background-color: color-mix(in srgb, var(--color-surface) 50%, transparent);
+    backdrop-filter: blur(16px);
+    border: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent);
+}
 }
