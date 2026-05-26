@@ -81,11 +81,14 @@ export const Navbar = () => {
                 href={link.href}
                 key={index}
                 className="text-lg  text-muted-foreground hover:text-foreground py-2   "
+                onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link.label}
               </a>
             ))}
-            <Button>Contact Me</Button>
+            <Button onClick={() => setIsMobileMenuOpen(false)}>
+              Contact Me
+            </Button>
           </div>
         </div>
       )}
