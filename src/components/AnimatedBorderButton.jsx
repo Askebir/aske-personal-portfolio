@@ -1,5 +1,3 @@
-import { Download } from "lucide-react";
-
 export const AnimatedBorderButton = ({ children }) => {
   return (
     <button
@@ -9,7 +7,7 @@ export const AnimatedBorderButton = ({ children }) => {
         focus-visible:ring-primary focus-visible:ring-offset-2 
         disabled:opacity-50 disabled:cursor-not-allowed group 
         px-8 py-4 text-lg font-medium rounded-full overflow-visible 
-        animated-border"
+        animated-border  "
     >
       {/* Animated SVG Border */}
       <svg
@@ -30,7 +28,7 @@ export const AnimatedBorderButton = ({ children }) => {
           className="animated-border-path"
         />
       </svg>
-      <span className="relative z-10 flex items-center justify-center gap-2">
+      <span className="relative z-10 flex items-center justify-center gap-2 ">
         {children}
       </span>
     </button>
