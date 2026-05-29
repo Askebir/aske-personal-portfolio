@@ -1,7 +1,7 @@
 import {
-  // Mail,
-  // Phone,
-  // MapPin,
+  Mail,
+  Phone,
+  MapPin,
   Send,
   CheckCircle,
   AlertCircle,
@@ -10,26 +10,26 @@ import { Button } from "@/components/Button";
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
 
-// const contactInfo = [
-//   {
-//     icon: Mail,
-//     label: "Email",
-//     value: "pedro@example.com",
-//     href: "mailto:pedro@example.com",
-//   },
-//   {
-//     icon: Phone,
-//     label: "Phone",
-//     value: "+1 (555) 123-4567",
-//     href: "tel:+15551234567",
-//   },
-//   {
-//     icon: MapPin,
-//     label: "Location",
-//     value: "San Francisco, CA",
-//     href: "#",
-//   },
-// ];
+const contactInfo = [
+  {
+    icon: Mail,
+    label: "Email",
+    value: "pedro@example.com",
+    href: "mailto:pedro@example.com",
+  },
+  {
+    icon: Phone,
+    label: "Phone",
+    value: "+1 (555) 123-4567",
+    href: "tel:+15551234567",
+  },
+  {
+    icon: MapPin,
+    label: "Location",
+    value: "San Francisco, CA",
+    href: "#",
+  },
+];
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -55,6 +55,10 @@ export const Contact = () => {
       const templatedId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
       const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
+      console.log("Service ID:", serviceId);
+      console.log("Template ID:", templatedId);
+      console.log("Public Key:", publicKey);
+
       if (!serviceId || !templatedId || !publicKey) {
         throw new Error(
           "EmailJS configuration is missing. Please check your enviroment variable.",
@@ -78,11 +82,9 @@ export const Contact = () => {
       });
       setFormData({ name: "", email: "", message: "" });
     } catch (error) {
-      console.error("EmailJS error", error);
-      setSubmitStatsus({
-        type: "error",
-        message: error.text || "Faild to send message. Please try again later.",
-      });
+      console.error("EmailJS error:", error);
+      console.error("Status:", error.status);
+      console.error("Text:", error.text);
     } finally {
       setIsLoading(false);
     }
@@ -200,6 +202,47 @@ export const Contact = () => {
                 </div>
               )}
             </form>
+          </div>
+
+          {/* Contact Info */}
+          <div className="space-y-6 animate-fade-in animation-delay-400">
+            <div className="glass rounded-3xl p-8">
+              <h3 className="text-xl font-semibold mb-6">
+                Contact Information
+              </h3>
+              <div className="space-y-4">
+                {contactInfo.map((item, i) => (
+                  <a
+                    key={i}
+                    href={item.href}
+                    className="flex items-center gap-4 p-4 rounded-xl hover:bg-surface transition-colors group"
+                  >
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                      <item.icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <div className="text-sm text-muted-foreground">
+                        {item.label}
+                      </div>
+                      <div className="font-medium">{item.value}</div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Availability Card */}
+            <div className="glass rounded-3xl p-8 border border-primary/30">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
+                <span className="font-medium">Currently Available</span>
+              </div>
+              <p className="text-muted-foreground text-sm">
+                I'm currently open to new opportunities and exciting projects.
+                Whether you need a full-time engineer or a freelance consultant,
+                let's talk!
+              </p>
+            </div>
           </div>
         </div>
       </div>
