@@ -111,7 +111,7 @@ export const Testimonials = () => {
               </div>
               <button
                 onClick={() => {
-                  previous();
+                  next();
                 }}
                 className="p-3 rounded-full glass hover:bg-primary/10 hover:text-primary transition-all"
               >

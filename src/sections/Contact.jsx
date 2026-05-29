@@ -1,35 +1,35 @@
 import {
-  Mail,
-  Phone,
-  MapPin,
+  // Mail,
+  // Phone,
+  // MapPin,
   Send,
   CheckCircle,
   AlertCircle,
 } from "lucide-react";
 import { Button } from "@/components/Button";
 import { useState } from "react";
-// import emailjs from "@emailjs/browser";
+import emailjs from "@emailjs/browser";
 
-const contactInfo = [
-  {
-    icon: Mail,
-    label: "Email",
-    value: "pedro@example.com",
-    href: "mailto:pedro@example.com",
-  },
-  {
-    icon: Phone,
-    label: "Phone",
-    value: "+1 (555) 123-4567",
-    href: "tel:+15551234567",
-  },
-  {
-    icon: MapPin,
-    label: "Location",
-    value: "San Francisco, CA",
-    href: "#",
-  },
-];
+// const contactInfo = [
+//   {
+//     icon: Mail,
+//     label: "Email",
+//     value: "pedro@example.com",
+//     href: "mailto:pedro@example.com",
+//   },
+//   {
+//     icon: Phone,
+//     label: "Phone",
+//     value: "+1 (555) 123-4567",
+//     href: "tel:+15551234567",
+//   },
+//   {
+//     icon: MapPin,
+//     label: "Location",
+//     value: "San Francisco, CA",
+//     href: "#",
+//   },
+// ];
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -38,8 +38,54 @@ export const Contact = () => {
     message: "",
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [submitStatus, setSubmitStatsus] = useState({
+    type: null,
+    message: "",
+  });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setIsLoading(true);
+    setSubmitStatsus({ type: null, message: "" });
+
+    try {
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templatedId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+      if (!serviceId || !templatedId || !publicKey) {
+        throw new Error(
+          "EmailJS configuration is missing. Please check your enviroment variable.",
+        );
+      }
+
+      await emailjs.send(
+        serviceId,
+        templatedId,
+        {
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        },
+        publicKey,
+      );
+
+      setSubmitStatsus({
+        type: "success",
+        message: "Message sent successfully! I'll get back to your soon.",
+      });
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      console.error("EmailJS error", error);
+      setSubmitStatsus({
+        type: "error",
+        message: error.text || "Faild to send message. Please try again later.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -66,7 +112,7 @@ export const Contact = () => {
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
           <div className="glass p-8 rounded-3xl border border-primary/30 animate-fade-in animate-delay-300 ">
-            <form action="" className="space-y-6">
+            <form action="" className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label
                   htmlFor="name"
@@ -127,9 +173,32 @@ export const Contact = () => {
                   className=" resize-none w-full px-4 py-3 bg-surface transition-all rounded-2xl border border-border foucs:ring-1 outline-none focus:ring-primary focus:border-primary "
                 />
               </div>
-              <Button className="w-full  " type="submit" size="lg">
-                Send Message <Send />
+              <Button
+                className="w-full  "
+                type="submit"
+                size="lg"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <p>Sending...</p>
+                ) : (
+                  <p className="flex text-center justify-center">
+                    Send Message <Send className="" />
+                  </p>
+                )}
               </Button>
+              {submitStatus.type && (
+                <div
+                  className={`flex items-center gap-3 p-4 rounded-xl ${submitStatus.type === "success" ? "bg-green-500/10 border-green-500/20 text-green-500" : "bg-red-500/10 border border-red-500/20 text-red-400"}`}
+                >
+                  {setSubmitStatsus.type === "success" ? (
+                    <CheckCircle className="w-5 h-5 shrink-0" />
+                  ) : (
+                    <AlertCircle className="w-5 h-5 flex-shirnk-0" />
+                  )}
+                  <p className="text-sm">{setSubmitStatsus.message}</p>
+                </div>
+              )}
             </form>
           </div>
         </div>
