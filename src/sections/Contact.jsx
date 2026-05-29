@@ -32,6 +32,16 @@ const contactInfo = [
 ];
 
 export const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  };
+
   return (
     <section className="py-32 relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-full ">
@@ -67,6 +77,10 @@ export const Contact = () => {
                 <input
                   id="name"
                   type="text"
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                   required
                   placeholder="Your name"
                   className="w-full px-4 py-3 bg-surface rounded-2xl border border-border foucs:ring-1 outline-none focus:ring-primary focus:border-primary "
@@ -84,6 +98,10 @@ export const Contact = () => {
                   id="email"
                   type="emial"
                   required
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                   placeholder="Your@email.com"
                   className="w-full px-4 py-3 bg-surface rounded-2xl border border-border foucs:ring-1 outline-none focus:ring-primary focus:border-primary "
                 />
@@ -101,6 +119,10 @@ export const Contact = () => {
                   type="text"
                   rows={5}
                   required
+                  value={formData.message}
+                  onChange={(e) =>
+                    setFormData({ ...formData, message: e.target.value })
+                  }
                   placeholder="Your message..."
                   className=" resize-none w-full px-4 py-3 bg-surface transition-all rounded-2xl border border-border foucs:ring-1 outline-none focus:ring-primary focus:border-primary "
                 />
