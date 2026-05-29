@@ -1,3 +1,4 @@
+import { Footer } from "./layout/Footer";
 import { Navbar } from "./layout/Navbar";
 import { About } from "./sections/About";
 import { Contact } from "./sections/Contact";
@@ -17,6 +18,7 @@ function App() {
         <Experience />
         <Testimonials />
         <Contact />
+        <Footer />
       </main>
     </div>
   );
