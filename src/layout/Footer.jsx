@@ -58,7 +58,7 @@ export const Footer = () => {
               </a>
             ))}
           </div>
-          <div className="text-white/90">
+          <div className="text-white/50">
             <p>cloned by Askebir</p>
           </div>
         </div>
