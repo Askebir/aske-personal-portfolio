@@ -58,6 +58,9 @@ export const Footer = () => {
               </a>
             ))}
           </div>
+          <div className="text-white/90">
+            <p>cloned by Askebir</p>
+          </div>
         </div>
       </div>
     </footer>

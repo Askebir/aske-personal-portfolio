@@ -14,19 +14,19 @@ const contactInfo = [
   {
     icon: Mail,
     label: "Email",
-    value: "pedro@example.com",
-    href: "mailto:pedro@example.com",
+    value: "askebirtadess@gmail.com",
+    href: "askebirtadess@gmail.com",
   },
   {
     icon: Phone,
     label: "Phone",
-    value: "+1 (555) 123-4567",
-    href: "tel:+15551234567",
+    value: "+251987815155",
+    href: "tel:++2519-87815155",
   },
   {
     icon: MapPin,
     label: "Location",
-    value: "San Francisco, CA",
+    value: "Adiss Abeba",
     href: "#",
   },
 ];
